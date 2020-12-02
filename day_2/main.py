@@ -14,7 +14,7 @@ def get_data(input_path):
     return policies_and_passwords_changed
 
 
-def password_is_valid(policy, password):
+def password_is_valid_first(policy, password):
     searched_char = policy[0]
     min_count = policy[1]
     max_count = policy[2]
@@ -27,13 +27,27 @@ def password_is_valid(policy, password):
     return min_count <= counter <= max_count
 
 
+def password_is_valid_second(policy, password):
+    return True
+
+
 def run():
     policies_and_passwords = get_data("./data/input")
     valid_passwords = []
+
     for item in policies_and_passwords:
-        if password_is_valid(item[0], item[1]):
+        if password_is_valid_first(item[0], item[1]):
             valid_passwords.append(item)
-    with open('results.txt', 'w') as f:
+    with open('results_first_half.txt', 'w') as f:
+        for item in valid_passwords:
+            f.write("%s\n" % item)
+        f.write("\n\n")
+        f.write("Number of valid passwords: %s\n" % len(valid_passwords))
+
+    for item in policies_and_passwords:
+        if password_is_valid_second(item[0], item[1]):
+            valid_passwords.append(item)
+    with open('results_second_half.txt', 'w') as f:
         for item in valid_passwords:
             f.write("%s\n" % item)
         f.write("\n\n")
