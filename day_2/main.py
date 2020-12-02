@@ -28,13 +28,19 @@ def password_is_valid_first(policy, password):
 
 
 def password_is_valid_second(policy, password):
-    return True
+    searched_char = policy[0]
+    first_pos = policy[1] - 1
+    second_pos = policy[2] - 1
+
+    return (password[first_pos] == searched_char and password[second_pos] != searched_char) \
+           or \
+           (password[first_pos] != searched_char and password[second_pos] == searched_char)
 
 
 def run():
     policies_and_passwords = get_data("./data/input")
-    valid_passwords = []
 
+    valid_passwords = []
     for item in policies_and_passwords:
         if password_is_valid_first(item[0], item[1]):
             valid_passwords.append(item)
@@ -44,6 +50,7 @@ def run():
         f.write("\n\n")
         f.write("Number of valid passwords: %s\n" % len(valid_passwords))
 
+    valid_passwords = []
     for item in policies_and_passwords:
         if password_is_valid_second(item[0], item[1]):
             valid_passwords.append(item)
