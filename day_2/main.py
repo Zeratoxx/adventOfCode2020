@@ -14,19 +14,30 @@ def get_data(input_path):
     return policies_and_passwords_changed
 
 
+def password_is_valid(policy, password):
+    searched_char = policy[0]
+    min_count = policy[1]
+    max_count = policy[2]
+    counter = 0
+    for character in password:
+        if character == searched_char:
+            counter += 1
+        if counter > max_count:
+            break
+    return min_count <= counter <= max_count
+
+
 def run():
     policies_and_passwords = get_data("./data/input")
+    valid_passwords = []
     for item in policies_and_passwords:
-        searched_char = item[0][0]
-        min = item[0][1]
-        max = item[0][2]
-        counter = 0
-        for character in item[1]:
-            if character == searched_char:
-                counter += 1
-            if (counter > max):
-                break
-
+        if password_is_valid(item[0], item[1]):
+            valid_passwords.append(item)
+    with open('results.txt', 'w') as f:
+        for item in valid_passwords:
+            f.write("%s\n" % item)
+        f.write("\n\n")
+        f.write("Number of valid passwords: %s\n" % len(valid_passwords))
 
 
 if __name__ == '__main__':
