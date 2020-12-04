@@ -1,0 +1,2 @@
+encountered trees for 3 right and 1 down: 274
+product of encountered trees: 6050183040
