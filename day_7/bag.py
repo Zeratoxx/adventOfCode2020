@@ -14,3 +14,6 @@ class Bag:
 
     def __str__(self):
         return f'{self.shade} {self.color}'
+
+    def __hash__(self):
+        return hash(self.shade + self.color)
